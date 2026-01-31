@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-primary text-white py-3 rounded-top-4">
+                    <h4 class="mb-0 fw-bold">Student Registration</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        
+                        <h5 class="text-primary fw-bold mb-3">1. Personal Information</h5>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="fw-bold small">Full Name</label>
+                                {{ form.name(class="form-control", placeholder="Enter Name") }}
+                            </div>
+                            <div class="col">
+                                <label class="fw-bold small">Email</label>
+                                {{ form.email(class="form-control", placeholder="Enter Email") }}
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label class="fw-bold small">Password</label>
+                                {{ form.password(class="form-control", placeholder="Password", id="pass1") }}
+                            </div>
+                            <div class="col">
+                                <label class="fw-bold small">Confirm Password</label>
+                                {{ form.confirm_password(class="form-control", placeholder="Confirm Password", id="pass2") }}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="showPassCheck" onclick="togglePass()">
+                            <label class="form-check-label small text-muted" for="showPassCheck">Show Password</label>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="fw-bold small">Student Phone</label>
+                                {{ form.student_phone(class="form-control", placeholder="Student Mobile") }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold small">Permanent Address</label>
+                            {{ form.address(class="form-control", placeholder="Full Address", rows=2) }}
+                        </div>
+
+                        <h5 class="text-primary fw-bold mb-3 mt-4">2. Parent Details</h5>
+                        <div class="mb-3">
+                            <label class="fw-bold small">Parent Phone</label>
+                            {{ form.parent_phone(class="form-control", placeholder="Parent Mobile") }}
+                        </div>
+
+                        <h5 class="text-primary fw-bold mb-3 mt-4">3. Academic Details</h5>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="fw-bold small">Course</label>
+                                {{ form.course(class="form-select") }}
+                            </div>
+                            <div class="col">
+                                <label class="fw-bold small">12th Marks (%)</label>
+                                {{ form.marks_12th(class="form-control", placeholder="e.g. 85%") }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold small">Upload 10th Marks Card</label>
+                            {{ form.marks_10th_file(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold small">Upload 12th Marks Card</label>
+                            {{ form.marks_12th_file(class="form-control") }}
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            {{ form.submit(class="btn btn-primary btn-lg fw-bold shadow-sm") }}
+                        </div>
+                        <p class="text-center mt-3"><a href="{{ url_for('login') }}">Already have an account? Login</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePass() {
+        var p1 = document.getElementById("pass1");
+        var p2 = document.getElementById("pass2");
+        
+        if (p1.type === "password") {
+            p1.type = "text";
+            p2.type = "text";
+        } else {
+            p1.type = "password";
+            p2.type = "password";
+        }
+    }
+</script>
+{% endblock %}

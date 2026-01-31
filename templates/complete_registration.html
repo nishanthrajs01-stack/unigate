@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-lg rounded-4">
+                
+                <div class="card-header bg-warning text-dark py-3 rounded-top-4 d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                    <div>
+                        <h4 class="mb-0 fw-bold">Action Required: Complete Profile</h4>
+                        <small class="mb-0">You successfully logged in with Google. Please finish your application.</small>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        
+                        <h5 class="text-primary fw-bold mb-3"><i class="fas fa-address-book me-2"></i>Contact Details</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="fw-bold small text-muted">Student Phone Number</label>
+                                {{ form.student_phone(class="form-control", placeholder="Enter your mobile number") }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fw-bold small text-muted">Parent Phone Number</label>
+                                {{ form.parent_phone(class="form-control", placeholder="Enter parent's mobile number") }}
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="fw-bold small text-muted">Permanent Address</label>
+                            {{ form.address(class="form-control", rows=2, placeholder="Enter full address with Pincode") }}
+                        </div>
+
+                        <hr class="text-muted opacity-25">
+
+                        <h5 class="text-primary fw-bold mb-3 mt-4"><i class="fas fa-user-graduate me-2"></i>Academic Details</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="fw-bold small text-muted">Select Course</label>
+                                {{ form.course(class="form-select") }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fw-bold small text-muted">12th Grade Marks (% or CGPA)</label>
+                                {{ form.marks_12th(class="form-control", placeholder="e.g. 85%") }}
+                            </div>
+                        </div>
+
+                        <h5 class="text-primary fw-bold mb-3 mt-4"><i class="fas fa-file-upload me-2"></i>Upload Documents</h5>
+                        <div class="alert alert-light border small text-muted mb-3">
+                            <i class="fas fa-info-circle me-1"></i> Please upload clear images (JPG/PNG) or PDF files.
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold small">Upload 10th Marks Card</label>
+                            {{ form.marks_10th_file(class="form-control") }}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="fw-bold small">Upload 12th Marks Card</label>
+                            {{ form.marks_12th_file(class="form-control") }}
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            {{ form.submit(class="btn btn-dark btn-lg fw-bold shadow-sm") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

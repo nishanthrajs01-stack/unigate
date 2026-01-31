@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if notice %}
+<div class="bg-warning text-dark py-2 overflow-hidden shadow-sm mb-4 border-bottom border-warning">
+    <div class="container d-flex align-items-center">
+        <span class="badge bg-danger me-3 shadow-sm">IMPORTANT</span>
+        <marquee behavior="scroll" direction="left" class="fw-bold fs-5" scrollamount="8" onmouseover="this.stop();" onmouseout="this.start();">
+            {{ notice.message }}   <span class="mx-5 text-muted">|</span>   {{ notice.message }}
+        </marquee>
+    </div>
+</div>
+{% endif %}
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100">
+                <div class="mb-3">
+                    <img src="https://ui-avatars.com/api/?name={{ user.name }}&background=0D6EFD&color=fff&size=128" class="rounded-circle shadow-sm">
+                </div>
+                <h4 class="fw-bold">{{ user.name }}</h4>
+                <p class="text-muted">{{ user.email }}</p>
+                <hr>
+                <div class="text-start">
+                    <p class="mb-2"><small class="fw-bold text-muted">COURSE APPLIED</small><br>{{ user.course }}</p>
+                    <p class="mb-2"><small class="fw-bold text-muted">STUDENT CONTACT</small><br>{{ user.student_phone if user.student_phone else 'N/A' }}</p>
+                    <p class="mb-2"><small class="fw-bold text-muted">PARENT CONTACT</small><br>{{ user.parent_phone if user.parent_phone else 'N/A' }}</p>
+                    <p class="mb-0"><small class="fw-bold text-muted">12TH PERCENTAGE</small><br>{{ user.marks_12th if user.marks_12th else 'N/A' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white py-3">
+                    <h5 class="fw-bold mb-0 text-primary">Application Status</h5>
+                </div>
+                <div class="card-body p-4">
+                    
+                    {% if user.application_status == 0 %}
+                    <div class="alert alert-danger border-0 shadow-sm rounded-3 p-4">
+                        <h4 class="alert-heading fw-bold"><i class="fas fa-times-circle me-2"></i> Application Rejected</h4>
+                        <p class="mb-0 mt-2">Unfortunately, your application was not successful.</p>
+                        <hr>
+                        <p class="mb-0 fw-bold">Reason Given by Admin:</p>
+                        <p class="bg-white p-3 rounded border text-danger mt-2">{{ user.rejection_reason }}</p>
+                    </div>
+                    {% else %}
+                    <div class="position-relative m-4 mb-5">
+                        <div class="progress" style="height: 3px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ (user.application_status / 4) * 100 }}%;"></div>
+                        </div>
+                        
+                        <button class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-success rounded-pill shadow-sm" style="width: 2.5rem; height:2.5rem;">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="position-absolute top-0 start-50 translate-middle btn btn-sm {{ 'btn-success' if user.application_status >= 2 else 'btn-secondary' }} rounded-pill shadow-sm" style="width: 2.5rem; height:2.5rem;">
+                            {% if user.application_status >= 2 %}<i class="fas fa-check"></i>{% else %}2{% endif %}
+                        </button>
+                        <button class="position-absolute top-0 start-100 translate-middle btn btn-sm {{ 'btn-success' if user.application_status >= 4 else 'btn-secondary' }} rounded-pill shadow-sm" style="width: 2.5rem; height:2.5rem;">
+                            {% if user.application_status >= 4 %}<i class="fas fa-check"></i>{% else %}3{% endif %}
+                        </button>
+                    </div>
+
+                    <div class="d-flex justify-content-between px-2 mb-5 small fw-bold text-muted text-uppercase">
+                        <span>Registered</span>
+                        <span>Docs Verified</span>
+                        <span>Admitted</span>
+                    </div>
+
+                    <div class="alert {{ 'alert-success' if user.application_status == 4 else 'alert-info' }} border-0 shadow-sm rounded-3 p-4">
+                        <h4 class="alert-heading fw-bold">
+                            {% if user.application_status == 1 %} <i class="fas fa-clock me-2"></i> Application Received
+                            {% elif user.application_status == 2 %} <i class="fas fa-check-double me-2"></i> Documents Verified
+                            {% elif user.application_status == 3 %} <i class="fas fa-search me-2"></i> Under Review
+                            {% elif user.application_status == 4 %} <i class="fas fa-trophy me-2"></i> Congratulations! Admission Granted.
+                            {% endif %}
+                        </h4>
+                        <p class="mb-0 mt-2">
+                            {% if user.application_status == 1 %} We have received your details. Our team will verify your 10th & 12th marks cards shortly.
+                            {% elif user.application_status == 2 %} Your academic documents have been verified. Your profile is now being reviewed by the Principal.
+                            {% elif user.application_status == 3 %} We are finalizing your college allotment. Please check back in 24 hours.
+                            {% elif user.application_status == 4 %} You have been selected! Please download your offer letter below and pay the fees.
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    {% if user.application_status == 4 %}
+                    <div class="text-center mt-5">
+                        <a href="{{ url_for('offer_letter', user_id=user.id) }}" class="btn btn-success btn-lg px-5 shadow fw-bold rounded-pill">
+                            <i class="fas fa-file-pdf me-2"></i> Download Offer Letter
+                        </a>
+                        <p class="small text-muted mt-3">Please print this document and bring it to the college.</p>
+                    </div>
+                    {% endif %}
+                    {% endif %} </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

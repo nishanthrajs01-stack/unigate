@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+            <h1 class="fw-bold text-primary mb-3">Talk to a Senior.</h1>
+            <p class="lead text-muted mb-4">Get real, unfiltered advice from students currently studying in your dream college.</p>
+            <ul class="list-unstyled">
+                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Know about hostel life</li>
+                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Real placement stats</li>
+                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Ragging-free campus check</li>
+            </ul>
+        </div>
+        <div class="col-lg-6 offset-lg-1">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-body p-5">
+                    <h4 class="fw-bold mb-4">Request a Call Back</h4>
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            <label class="small fw-bold text-muted">TOPIC</label>
+                            {{ form.topic(class="form-select bg-light border-0") }}
+                        </div>
+                        <div class="mb-4">
+                            <label class="small fw-bold text-muted">YOUR QUESTION</label>
+                            {{ form.message(class="form-control bg-light border-0", rows="4", placeholder="Example: Is the food good in the hostel?") }}
+                        </div>
+                        {{ form.submit(class="btn btn-primary w-100") }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

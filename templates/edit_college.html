@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0 text-primary">Edit College: {{ college.name }}</h5>
+                    <a href="{{ url_for('admin') }}" class="btn btn-sm btn-outline-secondary">Back to Admin</a>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="small fw-bold text-muted">COLLEGE NAME</label>
+                                {{ form.name(class="form-control bg-light border-0") }}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="small fw-bold text-muted">LOCATION</label>
+                                {{ form.location(class="form-control bg-light border-0") }}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="small fw-bold text-muted">COURSE</label>
+                                {{ form.course(class="form-select bg-light border-0") }}
+                            </div>
+                            
+                            <div class="col-12">
+                                <label class="small fw-bold text-muted">FEES</label>
+                                {{ form.fees(class="form-control bg-light border-0") }}
+                            </div>
+                            
+                            <div class="col-12">
+                                <label class="small fw-bold text-muted">DESCRIPTION</label>
+                                {{ form.description(class="form-control bg-light border-0", rows="4") }}
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <div class="col-md-6">
+                                <label class="small fw-bold text-muted">UPDATE IMAGE (Leave empty to keep current)</label>
+                                {{ form.image_file(class="form-control bg-light border-0") }}
+                                <small class="text-muted">Current: {{ college.image_file }}</small>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="small fw-bold text-muted">UPDATE BROCHURE (Leave empty to keep current)</label>
+                                {{ form.fee_file(class="form-control bg-light border-0") }}
+                            </div>
+                            
+                            <div class="col-12 mt-4 text-end">
+                                <a href="{{ url_for('admin') }}" class="btn btn-light me-2">Cancel</a>
+                                {{ form.submit(class="btn btn-primary px-5 fw-bold", value="Update College") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

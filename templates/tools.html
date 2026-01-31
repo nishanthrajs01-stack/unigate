@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">AI Career Counselor</h2>
+        <p class="text-muted">Answer 2 questions to find your perfect path.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 p-4">
+                <form method="POST">
+                    <div class="mb-4">
+                        <label class="fw-bold mb-2">What is your monthly budget?</label>
+                        <select name="budget" class="form-select bg-light border-0">
+                            <option value="low">Under ₹2 Lakhs</option>
+                            <option value="mid">₹2 - 5 Lakhs</option>
+                            <option value="high">₹5 Lakhs+</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="fw-bold mb-2">What is your main interest?</label>
+                        <select name="interest" class="form-select bg-light border-0">
+                            <option value="coding">Coding & Tech</option>
+                            <option value="management">Business & Management</option>
+                            <option value="medical">Healthcare</option>
+                            <option value="arts">Design & Arts</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2">Analyze Profile</button>
+                </form>
+
+                {% if recommendation %}
+                <div class="alert alert-success mt-4 border-0 shadow-sm">
+                    <h5 class="alert-heading fw-bold"><i class="fas fa-check-circle me-2"></i>Best Match Found:</h5>
+                    <p class="mb-0">{{ recommendation }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
